@@ -14,8 +14,12 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import login from "../login/actions"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
-const formSchema = z.object({
+export const formSchema = z.object({
   email: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
@@ -25,6 +29,8 @@ const formSchema = z.object({
 })
 
 export function LoginForm() {
+    const [loading, setLoading] = useState()
+    const router = useRouter()
      // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -34,7 +40,20 @@ export function LoginForm() {
   })
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try{
+        const {success, error} = await login()
+        if(success){
+            toast.success("Login Successfully")
+            router.push("/dashboard")
+        }else{
+            toast.error("Something went wrong")
+        }
+
+    }catch(error){
+        
+    }
+
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
@@ -70,7 +89,9 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">Login</Button>
+            <Button type="submit" className="w-full">Login
+                {loading && <}
+            </Button>
           </form>
         </Form>
       )
