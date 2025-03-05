@@ -18,6 +18,7 @@ import login from "../login/actions"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { Loader2 } from "lucide-react"
 
 export const formSchema = z.object({
   email: z.string().min(2, {
@@ -29,7 +30,7 @@ export const formSchema = z.object({
 })
 
 export function LoginForm() {
-    const [loading, setLoading] = useState()
+    const [loading, setLoading] = useState(false)
     const router = useRouter()
      // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -42,15 +43,17 @@ export function LoginForm() {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try{
-        const {success, error} = await login()
-        if(success){
+        const {data, error} = await login()
+        if(data){
+            setLoading(true)
             toast.success("Login Successfully")
             router.push("/dashboard")
         }else{
-            toast.error("Something went wrong")
+            toast.error(error, "Something went wrong")
         }
 
     }catch(error){
+        console.log(error);
         
     }
 
@@ -68,7 +71,7 @@ export function LoginForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="Enter Email" {...field} />
+                    <Input disabled={loading} type="email" placeholder="Enter Email" {...field} />
                   </FormControl>
                   
                   <FormMessage />
@@ -82,7 +85,7 @@ export function LoginForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="Password" {...field} />
+                    <Input disabled={loading} type="password" placeholder="Password" {...field} />
                   </FormControl>
                   
                   <FormMessage />
@@ -90,7 +93,7 @@ export function LoginForm() {
               )}
             />
             <Button type="submit" className="w-full">Login
-                {loading && <}
+                {loading && <Loader2 className="animate-spin"/>}
             </Button>
           </form>
         </Form>
