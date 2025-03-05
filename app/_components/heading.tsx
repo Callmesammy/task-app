@@ -40,7 +40,7 @@ const HeadingPage = () => {
             <div className="space-x-3 px-2 flex items-center">
             <Button><Link href="/">Dashboard </Link></Button>
             <Button variant="outline" >
-                <Link href="/">
+                <Link href="/login">
             Get Started</Link></Button>
 
             </div> 
