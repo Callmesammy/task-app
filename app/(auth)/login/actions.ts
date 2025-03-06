@@ -1,6 +1,8 @@
 "use server"
 
 import { createClient } from "@/utils/supabase/server"
+import { formSchema } from "../_components/login-form"
+import { z } from "zod"
 
 
 interface dataProps{
@@ -8,11 +10,11 @@ interface dataProps{
     success: boolean, 
     data: unknown| null,
 }
-export  async function  loginForm (formData: FormData): Promise<dataProps>{
+export  async function  loginForm (formData: z.infer<typeof formSchema>): Promise<dataProps>{
 const supabase = await createClient()
 const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string
+    email: formData.email,
+    password: formData.password
 }
 const { data: datat, error } = await supabase.auth.signInWithPassword(data) 
 return{

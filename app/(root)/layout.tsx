@@ -1,15 +1,24 @@
 
-interface LayoutProps{
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
+
+export default async function DashboardLayout({
+    children,
+  }: {
     children: React.ReactNode
-}
+  }) {
+    const supabase = await createClient()
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+  
+    if (!session) {
+      redirect("/")
+    }
+  
 
-
-const MainLayout = ({
-    children
-}: LayoutProps) => {
     return ( 
         <div>{children}|</div>
      );
 }
  
-export default MainLayout;

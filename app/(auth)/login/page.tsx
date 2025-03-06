@@ -1,13 +1,30 @@
+
 "use client"
 import Image from "next/image";
 import { FlipWor } from "../_components/flip-words";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoginForm } from "../_components/login-form";
 import { SignUpForm } from "../_components/signup-form copy";
+import { createClient } from "@/utils/supabase/client";
+import { redirect } from "next/navigation";
 
 
-const  Login = () => {
+const  Login=  ()=> {
     const [onPage, setOnPage]=useState("login");
+
+    useEffect(()=>{
+        const mainDoc = async()=>{
+            const supabase = await createClient()
+            const {data: session} = await supabase.auth.getSession()
+            if(session){
+                redirect("/dashboard")
+            }
+        }
+            
+ mainDoc()
+    
+
+    },[])
 
     return ( 
         <div className="flex flex-col w-full h-screen items-center justify-center">
@@ -28,4 +45,4 @@ const  Login = () => {
      );
 }
  
-export default  Login;
+ export default Login;

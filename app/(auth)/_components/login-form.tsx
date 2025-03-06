@@ -42,14 +42,10 @@ export function LoginForm() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-        const formdata = new FormData();
-
-    try{
       
-      const {success, error} = await loginForm(formdata);
-      formdata.append("email", values.email)
-      formdata.append("password", values.password)
-  
+    try{
+
+      const {success, error} = await loginForm(values);
   
         if(!success){
             setLoading(true)
