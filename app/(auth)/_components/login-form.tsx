@@ -14,11 +14,11 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import login from "../login/actions"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
+import { loginForm } from "../login/actions"
 
 export const formSchema = z.object({
   email: z.string().min(2, {
@@ -42,19 +42,31 @@ export function LoginForm() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
+        const formdata = new FormData();
+
     try{
-        const {data, error} = await login()
-        if(data){
+      
+      const {success, error} = await loginForm(formdata);
+      formdata.append("email", values.email)
+      formdata.append("password", values.password)
+  
+  
+        if(!success){
             setLoading(true)
-            toast.success("Login Successfully")
-            router.push("/dashboard")
+            toast.error(String(error))
         }else{
-            toast.error(error, "Something went wrong")
+          toast.success("Login successful")    
+                  router.push("/dashboard")
+
         }
+        
+        
 
     }catch(error){
         console.log(error);
         
+    } finally{
+      setLoading(false)
     }
 
     // Do something with the form values.
