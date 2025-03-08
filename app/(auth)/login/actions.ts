@@ -3,6 +3,7 @@
 import { createClient } from "@/utils/supabase/server"
 import { formSchema } from "../_components/login-form"
 import { z } from "zod"
+import { redirect } from "next/navigation"
 
 
 interface dataProps{
@@ -22,4 +23,14 @@ return{
     success: !error,
     data: datat || null
 }
+
+
+
+}
+
+export  async function logout(): Promise<void> {
+     
+  const supabase = await createClient()
+await supabase.auth.signOut()
+redirect("/")
 }

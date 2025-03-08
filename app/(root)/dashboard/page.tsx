@@ -1,6 +1,8 @@
+
 const Dashboard = () => {
     return (
-        <div>Dashboard</div>
+        <div className="flex px-3 pt-2 justify-between w-full h-screen">
+          Main Page        </div>
       );
 }
  

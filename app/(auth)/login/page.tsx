@@ -14,7 +14,7 @@ const  Login=  ()=> {
 
     useEffect(()=>{
         const mainDoc = async()=>{
-            const supabase = await createClient()
+            const supabase = createClient()
             const {data: session} = await supabase.auth.getSession()
             if(session){
                 redirect("/dashboard")

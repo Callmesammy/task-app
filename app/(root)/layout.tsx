@@ -1,6 +1,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import Header from "./dashboard/_components/header-segment";
 
 export default async function DashboardLayout({
     children,
@@ -18,7 +19,9 @@ export default async function DashboardLayout({
   
 
     return ( 
-        <div>{children}|</div>
+    <main>
+      <Header/>
+        <div>{children}|</div></main>
      );
 }
  
