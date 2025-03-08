@@ -2,6 +2,8 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import Header from "./dashboard/_components/header-segment";
+import SideBar from "./dashboard/_components/sidebar-segment";
+import Right from "./dashboard/_components/right-segment";
 
 export default async function DashboardLayout({
     children,
@@ -19,9 +21,15 @@ export default async function DashboardLayout({
   
 
     return ( 
-    <main>
+    <main className="flex  flex-col w-full h-screen">
       <Header/>
-        <div>{children}|</div></main>
+      <div className="flex  w-full h-full">
+        <SideBar/> 
+         <div className="w-full z-20  bg-green-400 border h-full"> 
+        {children}|</div>
+        <Right/>
+        </div>
+        </main>
      );
 }
  
