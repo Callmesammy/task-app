@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { LayoutDashboard, ListTodo, LoaderPinwheel, Save } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { User } from "@supabase/supabase-js";
 
 export const sideFeat =[
     {
@@ -26,12 +27,19 @@ export const sideFeat =[
     },
 ]
 
-const SideBar = () => {
+interface linprops{
+    user: User
+}
+
+const SideBar = ({
+    user
+}: linprops) => {
+    
     const pathName = usePathname()
 
     return (
-        <div className="w-[15rem] border border-r-4 shadow h-full sticky ">
-         <div className="w-full h-full justify-center gap-3 pt-3 items-center">
+        <div className="w-[15rem]  border border-r-4 shadow h-full sticky ">
+         <div className="w-full flex flex-col h-full  gap-3 pt-3 ">
             {sideFeat.map((items, keyus)=>{
                 const isActive = pathName === items.url || pathName.startsWith(`${items.url}/`)
                 return (
@@ -41,11 +49,15 @@ const SideBar = () => {
                         <h1 className="text-sm">{items.name} </h1>
                         
                     </Link>
-                    <div></div>
+                    
                     </div>
                 )
             })}
+              <div className="  flex-col pb-3 mt-auto text-sm flex w-full px-2">
+                     <h1>Wellcome</h1> {user.email || "No email"}
+                    </div>
          </div>
+       
         </div>
       );
 }

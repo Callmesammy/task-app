@@ -24,7 +24,7 @@ export default async function DashboardLayout({
     <main className="flex  flex-col w-full h-screen">
       <Header/>
       <div className="flex  w-full h-full">
-        <SideBar/> 
+        <SideBar user={session.user}/> 
          <div className="w-full z-20  bg-green-400 border h-full"> 
         {children}|</div>
         <Right/>

@@ -1,6 +1,6 @@
 const Right = () => {
     return ( 
-        <div>
+        <div className="hidden lg:flex w-[15rem] h-full ">
             Right
         </div>
      );
