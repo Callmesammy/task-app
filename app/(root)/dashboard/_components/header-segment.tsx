@@ -34,10 +34,10 @@ const Header = () => {
   }
 
     return (
-        <div className="w-full px-2 overflow-hidden justify-between shadow items-center sticky h-[8rem] bg-red-200 flex">
+        <div className="w-full px-2 overflow-hidden justify-between shadow items-center sticky h-[6rem] bg-black flex">
             <div onClick={()=>handleHome("/")} className="cursor-pointer flex space-x-1 items-center">
-          <Bluetooth className="load font-bold size-9 text-indigo-700"/>
-                <h1 className="font-semibold loading w-[11rem]">Connect Da World</h1>
+          <Bluetooth className="load font-bold size-9 text-white"/>
+                <h1 className="font-semibold loading w-[11rem] text-white">Connect Da World</h1>
             </div> 
            
             <Logout/>
