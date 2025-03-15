@@ -14,7 +14,6 @@ import { useForm } from "react-hook-form"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,14 +25,20 @@ import { Input } from "@/components/ui/input"
 
  
 const formSchema = z.object({
-    username: z.string().min(2).max(50),
+    title: z.string().min(2, {
+        message: "Please enter the title of your task"
+    }), 
+    amountSpend: z.coerce.number().min(2, {
+        message: "Enter Amount"
+    })
   })
 export function CreateDialog() {
       // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      title: "",
+      amountSpend: 0
     },
   })
  
@@ -45,34 +50,47 @@ export function CreateDialog() {
   }
   return (
     <Dialog>
-      <DialogTrigger>
-      <div className="border h-full  text-pretty hover:shadow-xl cursor-pointer rounded bg-secondary flex-col flex px-3 items-center justify-center text-sm">
+      <DialogTrigger asChild>
+      <Button className="border h-full text-black hover:text-white text-pretty hover:shadow-xl cursor-pointer rounded bg-secondary flex-col flex px-3 items-center justify-center text-sm">
                 <Plus/>
        Create New Task
 
-              </div>   
+              </Button>   
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Create Your Task</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when  done.
+            Add New activities and click save when done 
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="username"
+          name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="What do you want to do?" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+            
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+<FormField
+          control={form.control}
+          name="amountSpend"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Amount</FormLabel>
+              <FormControl>
+                <Input type="" placeholder="Amount to be spent?" {...field} />
+              </FormControl>
+            
               <FormMessage />
             </FormItem>
           )}
