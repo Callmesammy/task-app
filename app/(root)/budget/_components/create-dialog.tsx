@@ -34,6 +34,9 @@ export const formSchema = z.object({
     }), 
     description: z.string().min(2, {
         message: "Enter Amount"
+    }), 
+    amountBudget: z.coerce.number().min(6, {
+      message: "Please enter and amount"
     })
   })
 export function CreateDialog() {
@@ -45,7 +48,8 @@ export function CreateDialog() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      description: ""
+      description: "",
+      amountBudget: 0
     },
   })
  
@@ -56,13 +60,12 @@ export function CreateDialog() {
     try{
       const {success, error} = await CreateTask(values)
       if(!success){ 
-       
-
         toast.error(String(error))
       }else{
         toast.success("created successfully")
         setLoadin(true)
         setClosePage(true)
+        form.reset();
         
       }
 
@@ -119,9 +122,23 @@ export function CreateDialog() {
           name="description"
           render={({ field }) => (
             <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input  disabled={loading} placeholder="More about your task" {...field} />
+              </FormControl>
+            
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="amountBudget"
+          render={({ field }) => (
+            <FormItem>
               <FormLabel>Amount</FormLabel>
               <FormControl>
-                <Input  disabled={loading} placeholder="Amount to be spent?" {...field} />
+                <Input type="number"  disabled={loading} placeholder="Input Amount" {...field} />
               </FormControl>
             
               <FormMessage />

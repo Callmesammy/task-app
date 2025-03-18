@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { ComponentChat } from "./_components/chartData";
 
 interface Dashprops{
-  totalTasks: number, 
-  totalSPend: number, 
+  totalBalance: number, 
+  amountSpent: number, 
   id: string,
 }
 
@@ -49,7 +49,7 @@ if(data){
 
 <div className="flex flex-col w-full">
         <h1 className="text-sm font-bold ">Total Budget</h1>
-        <h1 className="text-lg font-bold tracking-wide">N{keys.totalTasks}</h1>
+        <h1 className="text-lg font-bold tracking-wide">N{keys.amountSpent}</h1>
 
 </div>
 
@@ -62,7 +62,7 @@ if(data){
 
 <div className="flex flex-col w-full">
         <h1 className="text-sm font-bold ">Total Budget</h1>
-        <h1 className="text-lg font-bold tracking-wide">N{keys.totalSPend}</h1>
+        <h1 className="text-lg font-bold tracking-wide">N{keys.amountSpent - keys.totalBalance }</h1>
 
 </div>
 
