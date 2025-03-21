@@ -3,6 +3,8 @@
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 import { CreateDialog } from "./_components/create-dialog";
+import { Progress } from "@/components/ui/progress"
+import * as React from "react"
 
 interface withProps {
   amountSpent: number;
@@ -10,9 +12,11 @@ interface withProps {
 
 interface TaskProps {
   amountSpent: number,
+  totalBalance: number,
   title: string,
   description: string,
   id: string;
+  task_id?: string
   dock: withProps[];
 }
 const Budget = () => {
@@ -30,8 +34,12 @@ const Budget = () => {
       } else {
         console.log(error);
       }
+      
     };
     shown();
+
+
+    
   }, []);
 
   return (
@@ -45,7 +53,7 @@ const Budget = () => {
         <CreateDialog />
 
         {isSubmitting.map((budget) => (
-          <div key={budget.id} className="border w-full h-[12rem] flex">
+          <div key={budget.id} className="border w-full h-[12rem] flex flex-col px-3">
             <div className="flex justify-between px-3 pt-3 w-full items-center">
               <div className="flex items-center space-x-3">
               <div className="text-3xl gap-2  p-2 h-[3rem] rounded-full items-center flex bg-purple-400">{budget.title}
@@ -55,14 +63,14 @@ const Budget = () => {
                               {budget.description}
 
               </h1>
-              </div>
+              </div> 
           <h1 className="text-lg font-bold text-pretty"> N{budget.amountSpent} </h1>
-
-
             </div>
             <div>
 
-            </div>
+            </div>           
+<Progress value={budget.totalBalance || 0}   className="w-[60%]" />
+
           </div>
         ))}
       </div>

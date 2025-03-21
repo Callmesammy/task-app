@@ -8,6 +8,7 @@ interface Dashprops{
   totalBalance: number, 
   amountSpent: number, 
   id: string,
+  task_id?: string
 }
 
 const Dashboard =  () => {
@@ -16,7 +17,7 @@ const Dashboard =  () => {
 useEffect(()=>{
 const Documents = async ()=>{
 const supabase = await createClient()
-const {data, error} = await supabase.from("tasks").select("*")
+const {data, error} = await supabase.from("flexy").select("*")
 
 if(data){
     console.log(data)
@@ -48,7 +49,7 @@ if(data){
               <div className="w-full border rounded items-center  flex h-[10rem] px-4">
 
 <div className="flex flex-col w-full">
-        <h1 className="text-sm font-bold ">Total Budget</h1>
+        <h1 className="text-sm font-bold ">Total Spent</h1>
         <h1 className="text-lg font-bold tracking-wide">N{keys.amountSpent}</h1>
 
 </div>
@@ -61,7 +62,7 @@ if(data){
               <div className="w-full border rounded items-center  flex h-[10rem] px-4">
 
 <div className="flex flex-col w-full">
-        <h1 className="text-sm font-bold ">Total Budget</h1>
+        <h1 className="text-sm font-bold ">Total Balance</h1>
         <h1 className="text-lg font-bold tracking-wide">N{keys.amountSpent - keys.totalBalance }</h1>
 
 </div>
