@@ -12,7 +12,7 @@ interface withProps {
 
 interface TaskProps {
   amountSpent: number,
-  totalBalance: number,
+  totalbalance: number,
   title: string,
   description: string,
   id: string;
@@ -69,7 +69,7 @@ const Budget = () => {
             <div>
 
             </div>           
-<Progress value={budget.totalBalance || 0}   className="w-[60%]" />
+<Progress value={budget.totalbalance || 0}   className="w-[60%]" />
 
           </div>
         ))}

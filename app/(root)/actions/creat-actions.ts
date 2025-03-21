@@ -6,7 +6,7 @@ interface TaskProps{
   title: string, 
   description: string,
   amountSpent: number,
-  totalBalance: number,
+  totalbalance: number,
 
 
 }

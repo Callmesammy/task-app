@@ -38,7 +38,7 @@ export const formSchema = z.object({
   amountSpent: z.coerce.number().min(6, {
     message: "Please enter and amount",
   }),
-  totalBalance: z.coerce.number().min(0, {
+  totalbalance: z.coerce.number().min(0, {
     message: "Please enter and amount",
   }),
 });
@@ -56,7 +56,7 @@ export function CreateDialog() {
       title: "",
       description: "",
       amountSpent: 0,
-      totalBalance: 0,
+      totalbalance: 0,
     },
   });
 
@@ -182,7 +182,7 @@ export function CreateDialog() {
                   />
                    <FormField
                     control={form.control}
-                    name="totalBalance"
+                    name="totalbalance"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="bg-green-800 rounded px-2 p-2 text-white font-semibold text-sm">Deposite Amount</FormLabel>
