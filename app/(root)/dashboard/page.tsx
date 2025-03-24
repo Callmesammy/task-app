@@ -1,11 +1,10 @@
 "use client"
 import { createClient } from "@/utils/supabase/client";
-import { ListTodo, Save } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ComponentChat } from "./_components/chartData";
 
 interface Dashprops{
-  totalBalance: number, 
+  totalbalance: number, 
   amountSpent: number, 
   id: string,
   task_id?: string
@@ -31,6 +30,12 @@ if(data){
 
 },[])  
 
+// adding of the necessary component for total balnace and amountSpent 
+
+const totalBalance = tasks.reduce((doc, task)=> doc +  task.totalbalance, 0)
+const amountSpend = tasks.reduce((doc, task)=> doc + task.amountSpent, 0)
+const Balance = totalBalance - amountSpend;
+
           
     return (
         <div className="flex pb-3 px-3 flex-col  w-full h-full pt-4 overflow-scroll space-y-3">
@@ -40,45 +45,21 @@ if(data){
           </h1>  
           <p className="text-sm text-pretty">Here is what happenning with your Tasks, Lets Manage your Tasks</p>   
 
-          <div className="grid pt-3 lg:cols-2 w-full h-full">
-            {tasks.map((keys)=>(
-
-           
-           <div key={keys.id} className="lg:flex px-2 gap-3 space-y-3 w-full justify-center ">
-
-              <div className="w-full border rounded items-center  flex h-[10rem] px-4">
-
-<div className="flex flex-col w-full">
-        <h1 className="text-sm font-bold ">Total Spent</h1>
-        <h1 className="text-lg font-bold tracking-wide">N{keys.amountSpent}</h1>
-
-</div>
-
-<div className="flex p-4 rounded-full bg-indigo-700">
-  <Save className="text-white size-6"/>
-
-</div>
-              </div>
-              <div className="w-full border rounded items-center  flex h-[10rem] px-4">
-
-<div className="flex flex-col w-full">
-        <h1 className="text-sm font-bold ">Total Balance</h1>
-        <h1 className="text-lg font-bold tracking-wide">N{keys.amountSpent - keys.totalBalance }</h1>
-
-</div>
-
-<div className="flex p-4 rounded-full bg-indigo-700">
-  <ListTodo className="text-white size-6"/>
-
-</div>
-              </div>
-              </div>
- ))}
- 
+          <div className="px-3 w-full h-52 rounded-md shadow  flex flex-col pt-2">
+           <div className="flex  w-full justify-between h-full">
+            <h1 className="text-red-600 text-lg font-semibold">Total Amount Spent</h1> <h1 className="font-bold text-lg text-red-600"> N{amountSpend}</h1> 
+           </div>
+           <div className="flex  w-full justify-between h-full">
+            <h1 className="text-indigo-600 text-lg font-semibold">Total Amount Deposited</h1> <h1 className="font-bold text-lg text-indigo-600"> N{totalBalance}</h1> 
+           </div>
+           <div className="flex  w-full justify-between h-full">
+            <h1 className="text-green-600 text-lg font-semibold">Current Balance</h1> <h1 className="font-bold text-lg text-green-600"> N{Balance}</h1> 
+           </div>
+ </div>
  <div className="pt-4 flex px-3 w-full h-full">
     <ComponentChat/>
     </div>
-          </div>
+          
           
            </div>
       );
