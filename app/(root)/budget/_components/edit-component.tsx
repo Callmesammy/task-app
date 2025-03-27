@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Loader2, Plus } from "lucide-react";
+import { Edit, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -24,10 +24,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { useState } from "react";
+import  { UpdateTask } from "../../actions/creat-actions";
 import EmojiPicker from "emoji-picker-react";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
-import CreateTask from "../../actions/creat-actions";
 
 export const formSchema = z.object({
   title: z.string().min(1, {
@@ -36,7 +36,7 @@ export const formSchema = z.object({
   description: z.string().min(2, {
     message: "Enter Amount",
   }),
-  amountSpent: z.coerce.number().min(3, {
+  amountSpent: z.coerce.number().min(6, {
     message: "Please enter and amount",
   }),
   totalbalance: z.coerce.number().min(0, {
@@ -45,9 +45,11 @@ export const formSchema = z.object({
   notes: z.string().min(2, {
     message: "enter notes"
   }),
-  
+  id: z.string().min(0, {
+    message: "enter notes"
+  })
 });
-export function CreateDialog() {
+export function EditTasks() {
   const [emoji, setEmoji] = useState("😊");
   const [enterEmoji, setEnterEmoji] = useState(false);
   const router = useRouter()
@@ -59,6 +61,7 @@ export function CreateDialog() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
+      id: "",
       notes: "",
       description: "",
       amountSpent: 0,
@@ -70,16 +73,14 @@ export function CreateDialog() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoadin(true)
     try {
-      const { success, error } = await CreateTask(values);
+      const { success, error } = await UpdateTask(values);
       
       if (!success) {
         toast.error(String(error));
       } else {
-        toast.success("created successfully");
+        toast.success("Updated Successfull");
         setClosePage(false);
         router.push("/dashboard")
-
-
       }
     } catch (error) {
       console.log(error);
@@ -97,11 +98,10 @@ export function CreateDialog() {
   }
   return (
     <>
-      <Dialog open={closePage} onOpenChange={setClosePage}>
+      <Dialog >
         <DialogTrigger asChild>
-          <Button className="border h-full text-black hover:text-white text-pretty hover:shadow-xl cursor-pointer rounded bg-secondary flex-col flex px-3 items-center justify-center text-sm">
-            <Plus />
-            Create New Task
+          <Button >
+           Edit <Edit className="text-sm"/> 
           </Button>
         </DialogTrigger>
         {closePage && (
