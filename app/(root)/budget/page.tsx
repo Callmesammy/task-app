@@ -23,10 +23,9 @@ interface TaskProps {
   title: string;
   notes: string;
   description: string;
-  id: string;
+  id: number;
   task_id?: string;
   dock: withProps[];
-  user_id: string
 }
 
 
@@ -64,7 +63,7 @@ const Budget = () => {
           {isSubmitting.map((budget) => {
 
             return (
-              <Link href={`/budget/${budget.user_id}`}
+              <Link href={`/budget/${budget.id}`}
                 key={budget.id}
                 className="border hover:shadow-md hover:shadow-black w-full h-[12rem] flex flex-col px-3 pb-2 relative text-white rounded-md"
               >

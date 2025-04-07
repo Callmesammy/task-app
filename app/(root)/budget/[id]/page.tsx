@@ -1,8 +1,46 @@
-const EditPage = ({budget}: {budget: {id?: string}}) => {
-  console.log("edit your file", budget)
+"use client"
+import { createClient } from "@/utils/supabase/client";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+interface Items{
+  title: string,
+  notes: string, 
+  totalbalance: number, 
+  amountSpent: number,
+  id: number
+}
+
+const EditPage = () => {
+  const {id} =useParams()
+const [budgeting, setBudgeting]= useState<Items| null>()
+  useEffect(()=>{
+    const  FileUpload =async ()=>{
+      const supabase = await createClient()
+      const {data, error}= await supabase.from("flexy").select("*").eq("id", id).single()
+      if(data){
+        setBudgeting(data as Items)
+      }
+      if(error){
+        console.log(error)
+      }
+    }
+    FileUpload();
+  },[id])
+
+
   return ( 
-    <div>
-      Edit Paged
+    <div className="w-full h-full flex px-3 pt-2">
+      <div className="grid md:grid-cols-2 px-3 rounded w-72 h-[13rem] border">
+      {budgeting? (
+        <div>
+          {budgeting.notes}
+          {budgeting.title}
+        </div>
+      ):(
+        <div>loading</div>
+      )}
+      </div>
     </div>
    );
 }
