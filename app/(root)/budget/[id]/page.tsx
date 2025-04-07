@@ -31,15 +31,16 @@ const [budgeting, setBudgeting]= useState<Items| null>()
 
   return ( 
     <div className="w-full h-full flex px-3 pt-2">
-      <div className="grid md:grid-cols-2 px-3 rounded w-72 h-[13rem] border">
+      <div className="grid md:grid-cols-2 px-3 rounded w-full h-full gap-3 ">
       {budgeting? (
-        <div>
+        <div className="w-full  border rounded h-[13rem] px-3 pt-2">
           {budgeting.notes}
           {budgeting.title}
         </div>
       ):(
         <div>loading</div>
       )}
+      <div> This is the greated show?</div>
       </div>
     </div>
    );
