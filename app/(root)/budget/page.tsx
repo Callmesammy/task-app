@@ -6,8 +6,7 @@ import { CreateDialog } from "./_components/create-dialog";
 import * as React from "react";
 import Image from "next/image";
 import { Permanent_Marker } from "next/font/google";
-import {   Trash } from "lucide-react";
-import { EditTasks } from "./_components/edit-component";
+import Link from "next/link";
 
 const permanentMarker = Permanent_Marker({
   subsets: ['latin'],
@@ -27,15 +26,18 @@ interface TaskProps {
   id: string;
   task_id?: string;
   dock: withProps[];
+  user_id: string
 }
 
 
 
 const Budget = () => {
+  
   const [isSubmitting, setIsSubmitting] = useState<TaskProps[]>([]);
 
 
   useEffect(() => {
+    
     const shown = async () => {
       const supabase = await createClient();
       const { data, error } = await supabase.from("flexy").select("*");
@@ -62,20 +64,18 @@ const Budget = () => {
           {isSubmitting.map((budget) => {
 
             return (
-              <div
+              <Link href={`/budget/${budget.user_id}`}
                 key={budget.id}
-                className="border w-full h-[12rem] flex flex-col px-3 pb-2 relative text-white"
+                className="border hover:shadow-md hover:shadow-black w-full h-[12rem] flex flex-col px-3 pb-2 relative text-white rounded-md"
               >
                 <div className="w-full justify-between px-4 flex pt-5">
-                 <div className="cursor-pointr"><EditTasks/> 
-                  <Trash className="text-sm"/></div>
+               
                 </div>
                 <Image src="/bck.avif" alt="background" fill className="absolute rounded-md -z-20"/>
                 <div className="flex relative justify-between px-3 pt-3 w-full items-center h-full">
                   <div className="flex items-center space-x-3">
                     <div className="text-3xl gap-2 p-2 h-[3rem] rounded-full items-center flex bg-white ">
-                      {budget.title}    
-                                 
+                                 {budget.title}
 
                     </div> 
                     <h1 className="capitalize text-sm font-bold">
@@ -89,7 +89,7 @@ const Budget = () => {
                 </div>
                 <div className={`${permanentMarker.className} "text-sm px-2 top-6 flex absolute"`}>{budget.notes}</div>
 
-              </div>
+              </Link>
             );
           })}
         </div>
