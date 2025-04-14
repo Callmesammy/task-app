@@ -3,8 +3,9 @@ import { createClient } from "@/utils/supabase/client";
 import { Loader2, Trash2 } from "lucide-react";
 import { redirect, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Additems from "../_components/add-items";
 import { toast } from "sonner";
+import Image from "next/image";
+import { Additems } from "../_components/add-items";
 
 interface Items{
   title: string,
@@ -62,10 +63,12 @@ const deleteD = async ()=>{
       </div>
       
       <div className="grid md:grid-cols-2 rounded w-full h-full gap-3 ">
-      {budgeting? (
-        <div className="w-full flex flex-cols space-y-3 border rounded h-[13rem] px-3 pt-2">
+      {budgeting?  (
+        <div className="w-full items-center text-white relative flex flex-cols space-y-3 border rounded h-[13rem] px-3 pt-2">
+                          <Image src="/bck.avif" alt="background" fill className="absolute rounded-md -z-20"/>
+
         <h1 className="text-lg font-semibold "> {budgeting.notes} </h1> 
-        {budgeting.amountSpent}
+      <h1 className="flex font-bold"> N{budgeting.amountSpent} </h1>
         </div>
       ):(
         <div className="w-full items-center flex justify-center border bg-secondary animate-pulse  h-[13rem] rounded">
